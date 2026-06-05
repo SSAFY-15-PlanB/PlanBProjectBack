@@ -1,0 +1,93 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: planb_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1!
+      MYSQL_DATABASE: plan_b
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin1!
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+      - ./sql/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - planb-network
+
+  sql-sync:
+    image: mysql:8.0
+    container_name: planb_sql-sync
+    volumes:
+      - ./sql/dumps:/sql:ro # 💡 backup 폴더 위치와 맞추기 위해 dumps로 경로를 지정했습니다.
+    command: >
+      bash -c "
+        echo '=== [Sync Start] Connecting to DB... ===';
+        until mysqladmin ping -h db -u root -proot1! --silent; do
+          sleep 5;
+        done;
+      
+        # 💡 팀원들이 깃에 올린 '구조(스키마)' 파일을 읽어서 내 로컬 DB에 동기화합니다.
+        if [ -f \"/sql/database_schema.sql\" ]; then
+          mysql -h db -u root -proot1! plan_b < \"/sql/database_schema.sql\";
+          echo \"Executed /sql/database_schema.sql\";
+        else
+          echo \"[Warning] /sql/database_schema.sql file not found!\";
+        fi
+        echo '=== [Sync Complete] Container Exiting... ===';
+      "
+    depends_on:
+      - db
+    networks:
+      - planb-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpMyAdmin
+    platform: linux/amd64
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root1!
+    depends_on:
+      - db
+    networks:
+      - planb-network
+
+  backup:
+    image: mysql:8.0
+    container_name: planb_db_backup
+    volumes:
+      - ./sql/dumps:/backup:rw
+    command: >
+      bash -c "
+        echo '=== [Backup Start] Connecting to DB... ===';
+        until mysqladmin ping -h db -u root -proot1! --silent; do
+          sleep 2;
+        done;
+      
+        echo 'Exporting schema and data together...';
+        # [구조 + 데이터] 둘 다 포함해서 database.sql로 백업
+        mysqldump --complete-insert --skip-extended-insert --skip-add-locks --skip-disable-keys --skip-comments -h db -u root -proot1! plan_b > /backup/database.sql;
+      
+        echo 'Exporting schema only...';
+        # [--no-data] 옵션을 주어 오직 '테이블 구조만' database_schema.sql로 백업
+        mysqldump --no-data --skip-add-locks --skip-disable-keys --skip-comments -h db -u root -proot1! plan_b > /backup/database_schema.sql;
+      
+        echo '=== [Backup Complete] Container Exiting... ===';
+      "
+    depends_on:
+      - db
+    networks:
+      - planb-network
+
+volumes:
+  mysql_data:
+
+networks:
+  planb-network:
+    driver: bridge
