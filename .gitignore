@@ -293,4 +293,6 @@ $RECYCLE.BIN/
 # Custom ignores
 src/main/resources/application-secret.properties
 
+application-secret.properties
+
 
