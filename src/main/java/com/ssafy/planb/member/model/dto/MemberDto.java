@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class MemberDto {
 
     @Getter
+    @Setter
     public static class Info {
         private Long id;
         private String name;
