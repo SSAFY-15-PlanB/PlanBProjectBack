@@ -64,12 +64,13 @@ CREATE TABLE `member` (
   `password` varchar(255) NOT NULL,
   `gender` varchar(50) NOT NULL,
   `birth_date` date NOT NULL,
-  `refresh_token` varchar(255) NOT NULL,
+  `refresh_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `member_email_uk` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `member` (`id`, `name`, `email`, `password`, `gender`, `birth_date`, `refresh_token`) VALUES (13,'최성보','ldHQr9kcSZo6kdwjHKxQO/jD7VX9jgI9Tv5NBjwXsBo=','$2a$10$OFfo7BF54X8FKDPHz8ycNOHbAaRnER41Cm2.lnfpo.CXycNy7IH6K','MALE','2026-06-06','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsZEhRcjlrY1NabzZrZHdqSEt4UU8vakQ3Vlg5amdJOVR2NU5CandYc0JvPSIsImlhdCI6MTc4MDc0MTQ1OCwiZXhwIjoxNzgxMzQ2MjU4fQ.E9abSEJL3Kf6unGjpbzT9FYZVTF1TqzfWwZYkWMKmNY');
 DROP TABLE IF EXISTS `plan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

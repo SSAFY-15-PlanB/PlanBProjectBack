@@ -1,5 +1,6 @@
 package com.ssafy.planb.member.model.service;
 
+import com.ssafy.planb.member.aspect.MemberAspect;
 import com.ssafy.planb.member.model.dto.MemberDto;
 import com.ssafy.planb.member.model.enums.Gender;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,12 @@ class MemberServiceImplTest {
     @Autowired
     private MemberService memberService;
 
+
     @Test
     void registerMember() {
         MemberDto.Register registerMember = new MemberDto.Register();
-        registerMember.setName("최성보");
-        registerMember.setEmail("cseongbo17@gmail.com");
+        registerMember.setName("홍길동");
+        registerMember.setEmail("hong@gmail.com");
         registerMember.setPassword("1234");
         registerMember.setGender(Gender.MALE);
         registerMember.setBirthDate(LocalDate.now());

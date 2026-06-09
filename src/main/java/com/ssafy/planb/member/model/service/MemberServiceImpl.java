@@ -17,8 +17,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int registerMember(MemberDto.Register registerInfo) {
-        registerInfo.setEmail(encryptUtil.aesEncrypt(registerInfo.getEmail()));
-        registerInfo.setPassword(encryptUtil.encryptPwd(registerInfo.getPassword()));
 
         Member m = Member.builder()
                 .email(registerInfo.getEmail())
