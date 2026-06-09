@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.planb.member.model.mapper.MemberMapper">
+
+    <insert id="saveMember" parameterType="Member">
+        INSERT INTO member (name, email, password, gender, birth_date)
+                    VALUES (#{name}, #{email}, #{password}, #{gender}, #{birthDate})
+    </insert>
+
+<!--    <select id="findMemberByEmail" resultType="Member">-->
+<!--        SELECT id, name, email, password, gender, birth_date AS birthDate, refresh_token AS refreshToken FROM member-->
+<!--        WHERE email = #{email}-->
+<!--    </select>-->
+
+    <select id="findMemberByEmail" resultType="Member">
+        SELECT * FROM member
+        WHERE email = #{email}
+    </select>
+
+    <select id="findMemberInfoByEmail" resultType="com.ssafy.planb.member.model.dto.MemberDto$Info">
+        SELECT id, name, email, gender, birth_date FROM member
+        WHERE email = #{email}
+    </select>
+
+    <select id="findMemberInfoById" resultType="com.ssafy.planb.member.model.dto.MemberDto$Info">
+        SELECT id, name, email, gender, birth_date, refresh_token FROM member
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateRefreshToken" parameterType="com.ssafy.planb.member.model.dto.MemberDto$UpdateRefreshToken">
+        UPDATE member
+        SET refresh_token = #{refreshToken}
+        WHERE email = #{email}
+    </update>
+
+
+
+<!--    <select id="findById" parameterType="String" resultType="Member">-->
+<!--        SELECT id, password, name, role, refresh_token-->
+<!--        FROM member-->
+<!--        WHERE id = #{id}-->
+<!--    </select>-->
+
+
+
+</mapper>
