@@ -1,5 +1,7 @@
 package com.ssafy.planb.member.model.service;
 
+import com.ssafy.planb.global.exceptions.CustomException;
+import com.ssafy.planb.global.exceptions.ErrorCode;
 import com.ssafy.planb.member.model.Member;
 import com.ssafy.planb.member.model.dto.MemberDto;
 import com.ssafy.planb.member.model.mapper.MemberMapper;
@@ -28,4 +30,18 @@ public class MemberServiceImpl implements MemberService {
 
         return memberMapper.saveMember(m);
     }
+
+    @Override
+    public MemberDto.Info searchMemberByEmail(String email) {
+
+        MemberDto.Info memberInfo = memberMapper.findMemberInfoByEmail(email);
+
+        if (memberInfo == null) {
+            throw new CustomException(ErrorCode.INVALID_EMAIL);
+        }
+
+        return memberInfo;
+    }
+
+
 }

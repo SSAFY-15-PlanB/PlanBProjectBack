@@ -29,6 +29,10 @@ public class Member {
         this.birthDate = birthDate;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
 
 

@@ -28,15 +28,15 @@ public class AuthServiceImpl implements AuthService {
     public Map<String, String> login(MemberDto.Login loginInfo) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(encryptUtil.aesEncrypt(loginInfo.getEmail()), loginInfo.getPassword())
+                new UsernamePasswordAuthenticationToken(loginInfo.getEmail(), loginInfo.getPassword())
         );
 
         String userEmail = authentication.getName();
         String role = authentication.getAuthorities().iterator().next().getAuthority();
 
         // 토큰 발급
-        String accessToken = jwtUtil.generateAccessToken(userEmail, role);
-        String refreshToken = jwtUtil.generateRefreshToken(userEmail);
+        String accessToken = jwtUtil.generateAccessToken(loginInfo.getEmail(), role);
+        String refreshToken = jwtUtil.generateRefreshToken(loginInfo.getEmail());
 
         // DB에 refresh token 저장
         MemberDto.UpdateRefreshToken urt = new MemberDto.UpdateRefreshToken();
