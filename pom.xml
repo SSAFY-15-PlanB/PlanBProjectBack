@@ -100,6 +100,41 @@
 			<version>3.5.11</version>
 		</dependency>
 
+		<!-- Redis -->
+		<!-- Source: https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>4.0.4</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Source: https://mvnrepository.com/artifact/io.lettuce/lettuce-core -->
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>6.6.0.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Jackson -->
+		<!-- Source: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.21.2</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Java Mail -->
+		<!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>4.0.6</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 
 

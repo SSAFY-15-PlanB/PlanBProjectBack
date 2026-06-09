@@ -1,11 +1,15 @@
 package com.ssafy.planb.member.controller;
 
+import com.ssafy.planb.common.service.EmailService;
+import com.ssafy.planb.global.response.ApiResponse;
 import com.ssafy.planb.member.model.Member;
 import com.ssafy.planb.member.model.dto.MemberDto;
 import com.ssafy.planb.member.model.service.AuthService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,22 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final EmailService emailService;
+
+    @GetMapping("/mail/request")
+    public ResponseEntity<ApiResponse<Void>> sendVerificationCode(@RequestParam String email) throws MessagingException {
+        emailService.sendVerificationCode(email);
+        return ResponseEntity.ok(ApiResponse.success());
+    }
+
+    @PostMapping("/mail/verify")
+    public ResponseEntity<ApiResponse<Void>> verifyCode(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String code = body.get("code");
+
+        emailService.verifyEmailCode(email, code);
+        return ResponseEntity.ok(ApiResponse.success());
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MemberDto.Login loginInfo, HttpServletResponse response) {
