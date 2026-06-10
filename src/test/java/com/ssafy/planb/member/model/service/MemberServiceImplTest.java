@@ -22,8 +22,8 @@ class MemberServiceImplTest {
     @Test
     void registerMember() {
         MemberDto.Register registerMember = new MemberDto.Register();
-        registerMember.setName("홍길동");
-        registerMember.setEmail("hong@gmail.com");
+        registerMember.setName("최성보");
+        registerMember.setEmail("cseongbo17@gmail.com");
         registerMember.setPassword("1234");
         registerMember.setGender(Gender.MALE);
         registerMember.setBirthDate(LocalDate.now());

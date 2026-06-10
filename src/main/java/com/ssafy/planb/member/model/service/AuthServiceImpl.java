@@ -32,15 +32,17 @@ public class AuthServiceImpl implements AuthService {
         );
 
         String userEmail = authentication.getName();
+        System.out.println(userEmail);
         String role = authentication.getAuthorities().iterator().next().getAuthority();
 
         // 토큰 발급
         String accessToken = jwtUtil.generateAccessToken(loginInfo.getEmail(), role);
         String refreshToken = jwtUtil.generateRefreshToken(loginInfo.getEmail());
+        System.out.println(refreshToken);
 
         // DB에 refresh token 저장
         MemberDto.UpdateRefreshToken urt = new MemberDto.UpdateRefreshToken();
-        urt.setEmail(userEmail);
+        urt.setEmail(encryptUtil.aesEncrypt(userEmail));
         urt.setRefreshToken(refreshToken);
         memberMapper.updateRefreshToken(urt);
 
