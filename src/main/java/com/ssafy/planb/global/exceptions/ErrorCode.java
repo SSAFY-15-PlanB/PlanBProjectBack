@@ -11,6 +11,7 @@ public enum ErrorCode {
     // Member (400)
     DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "M-001", "이미 존재하는 이메일입니다."),
     INVALID_EMAIL(HttpStatus.BAD_REQUEST, "M-002", "이메일이 존재 하지 않습니다."),
+    INVALID_CODE(HttpStatus.BAD_REQUEST, "M-003", "잘못된 인증번호 입니다."),
 
     // Auth (401, 403)
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "A-001", "인증 자격 증명이 유효하지 않습니다."),

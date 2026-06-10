@@ -71,5 +71,19 @@ class MemberMapperTest {
     }
 
 
+    @Test
+    void updateRefreshToken() {
+        MemberDto.UpdateRefreshToken urt = new MemberDto.UpdateRefreshToken();
+
+        urt.setEmail("cseongbo17@gmail.com");
+        urt.setRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjc2VvbmdibzE3QGdtYWlsLmNvbSIsImlhdCI6MTc4MTA2NTUyOSwiZXhwIjoxNzgxNjcwMzI5fQ.O2uXmwPKsiawMc5EsknxFGXzRcjcK4xH6GNmTi7r1LY");
+
+        memberMapper.updateRefreshToken(urt);
+
+        Member memberByEmail = memberMapper.findMemberByEmail("");
+
+        Assertions.assertEquals("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjc2VvbmdibzE3QGdtYWlsLmNvbSIsImlhdCI6MTc4MTA2NTUyOSwiZXhwIjoxNzgxNjcwMzI5fQ.O2uXmwPKsiawMc5EsknxFGXzRcjcK4xH6GNmTi7r1LY", memberByEmail.getRefreshToken());
+
+    }
 
 }
