@@ -18,7 +18,7 @@
     <select id="findPostListByWriterName" resultType="Post">
         select *
         from post
-        where id in (select id
+        where writer_id in (select id
             from member
             where name like CONCAT('%', #{writerName}, '%')
         )
@@ -27,7 +27,7 @@
     <select id="findPostListByWriterId" resultType="Post">
         select *
         from post
-        where id = #{writerId}
+        where writer_id = #{writerId}
     </select>
 
     <select id="findPostListByTitle" resultType="Post">
