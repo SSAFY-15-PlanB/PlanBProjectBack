@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.planb.post.model.mapper.PostMapper">
+
+   <insert id="createPost">
+       insert into post(title, content, writer_id, created_at, updated_at)
+       values (#{title}, #{content}, #{writerId}, #{createdAt}, #{updatedAt})
+   </insert>
+
+    <select id="findPostById" resultType="Post">
+        select *
+        from post
+        where id = #{id}
+    </select>
+
+    <select id="findPostListByWriterName" resultType="Post">
+        select *
+        from post
+        where id in (select id
+            from member
+            where name like CONCAT('%', #{writerName}, '%')
+        )
+    </select>
+
+    <select id="findPostListByWriterId" resultType="Post">
+        select *
+        from post
+        where id = #{writerId}
+    </select>
+
+    <select id="findPostListByTitle" resultType="Post">
+        select *
+        from post
+        where title like CONCAT('%', #{title}, '%')
+    </select>
+
+
+</mapper>
