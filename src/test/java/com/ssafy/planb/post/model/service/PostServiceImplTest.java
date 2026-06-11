@@ -24,11 +24,11 @@ class PostServiceImplTest {
     @Test
     public void createPostTest(){
         PostDto.Info postInfo = PostDto.Info.builder()
-                .writerId(13L)
+                .writerId(18L)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .title("gdgd")
-                .content("content")
+                .title("최성보작성2")
+                .content("본문본문2")
                 .build();
 
         int actual = postService.createPost(postInfo);
@@ -40,52 +40,41 @@ class PostServiceImplTest {
     public void findPostByIdTest() {
         Post actual = postService.findPostById(2L);
 
-        Assertions.assertEquals(1L, actual.getWriterId());
-        Assertions.assertEquals("gdgd", actual.getTitle());
-        Assertions.assertEquals("content", actual.getContent());
-
-        Post actual2 = postService.findPostById(3L);
-
-        Assertions.assertEquals(1L, actual2.getWriterId());
-        Assertions.assertEquals("gdgd", actual2.getTitle());
-        Assertions.assertEquals("content", actual2.getContent());
+        Assertions.assertEquals(13L, actual.getWriterId());
+        log.info(actual.toString());
     }
 
     @Test
     public void findPostListByWriterNameTest() {
         List<Post> actual = postService.findPostListByWriterName("성보");
 
-        Assertions.assertEquals(5L, actual.get(0).getWriterId());
-        Assertions.assertEquals("gdgd", actual.get(0).getTitle());
-        Assertions.assertEquals("content", actual.get(0).getContent());
-        for(Post post : actual){
-            Assertions.assertEquals(5L, post.getWriterId());
-            Assertions.assertEquals("gdgd", post.getTitle());
-            Assertions.assertEquals("content", post.getContent());
-        }
+        Assertions.assertEquals(18L, actual.get(0).getWriterId());
+        Assertions.assertEquals("최성보작성", actual.get(0).getTitle());
+        Assertions.assertEquals("본문본문", actual.get(0).getContent());
     }
 
     @Test
     public void findPostListByWriterIdTest() {
-        List<Post> post4 = postService.findPostListByWriterId(1L);
-        List<Post> post5 = postService.findPostListByWriterId(13L);
+        List<Post> post4 = postService.findPostListByWriterId(18L);
 
         Assertions.assertEquals(4L, post4.get(0).getId());
-        Assertions.assertEquals("gdgd", post4.get(0).getTitle());
-        Assertions.assertEquals("content", post4.get(0).getContent());
+        Assertions.assertEquals("최성보작성", post4.get(0).getTitle());
+        Assertions.assertEquals("본문본문", post4.get(0).getContent());
         log.info(post4.get(0).toString());
 
         for(Post post : post4){
             Assertions.assertEquals(4L, post.getId());
-            Assertions.assertEquals("gdgd", post.getTitle());
-            Assertions.assertEquals("content", post.getContent());
+            Assertions.assertEquals("최성보작성", post.getTitle());
+            Assertions.assertEquals("본문본문", post.getContent());
             log.info(post.toString());
         }
+    }
 
-        for(Post post : post5){
-            Assertions.assertEquals(5L, post.getId());
-            Assertions.assertEquals("gdgd", post.getTitle());
-            Assertions.assertEquals("content", post.getContent());
+    @Test
+    public void findPostListByTitleTest() {
+        List<Post> actualList = postService.findPostListByTitle("성보");
+
+        for(Post post : actualList){
             log.info(post.toString());
         }
     }

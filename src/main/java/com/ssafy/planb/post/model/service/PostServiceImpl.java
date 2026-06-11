@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService{
                 .content(postInfo.getContent())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .writerId(13L)
+                .writerId(postInfo.getWriterId())
                 .build();
 
         return postMapper.createPost(newPost);
